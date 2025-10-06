@@ -1,0 +1,11 @@
+# @schema
+# type: object
+# description: Configuration for the Subnet Blueprint dependency.
+# @schema
+arubacloud-provider-kog-subnet-blueprint:
+  # @schema
+  # type: boolean
+  # description: Enable the Subnet Blueprint dependency.
+  # default: true
+  # @schema
+  enabled: true

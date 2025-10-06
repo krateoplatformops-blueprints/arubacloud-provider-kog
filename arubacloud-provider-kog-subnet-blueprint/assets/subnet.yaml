@@ -1,0 +1,775 @@
+openapi: 3.0.1
+info:
+  title: Aruba.Network.Api
+  description: 'Aruba.Network.Api HTTP API
+
+
+    Download the <a href="/openapi/network-provider.json" target="_blank"> OpenAPI file</a>'
+  version: '1.0'
+servers:
+- url: https://api.arubacloud.com
+paths:
+  /projects/{projectId}/providers/Aruba.Network/vpcs/{vpcId}/subnets:
+    get:
+      servers:
+        - url: {{ include "subnet.webServiceUrl" . }}
+          description: Url used for a pod exposed with 8080 port exposed via clusterIP service
+      summary: List Subnets on Aruba Cloud
+      description: List Subnets on Aruba Cloud using the provided project and vpc details.
+      operationId: list-subnets
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: Filter expression
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Sort expression
+          schema:
+            type: string
+        - name: projection
+          in: query
+          description: Projection expression
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Limit for pagination
+          schema:
+            type: integer
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of subnets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetListResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "500":
+          description: Internal Server Error
+          content: {}
+    post:
+      servers:
+        - url: {{ include "subnet.webServiceUrl" . }}
+          description: Url used for a pod exposed with 8080 port exposed via clusterIP service
+      summary: Create a new Subnet on Aruba Cloud
+      description: Create a new Subnet on Aruba Cloud using the provided project and vpc details.
+      operationId: post-subnet
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Subnet creation request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedCreateSubnetRequestDto'
+        required: true
+      responses:
+        "201":
+          description: Subnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "500":
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: subnetCreate
+  /projects/{projectId}/providers/Aruba.Network/vpcs/{vpcId}/subnets/{id}:
+    delete:
+      tags:
+      - Subnet
+      summary: Delete Subnet
+      parameters:
+      - name: projectId
+        in: path
+        description: unique identifier of the project CMP
+        required: true
+        schema:
+          type: string
+      - name: vpcId
+        in: path
+        description: unique identifier of the vpc in which the subnet has been created
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: unique identifier of the subnet to delete
+        required: true
+        schema:
+          type: string
+      - name: newDefaultSubnet
+        in: query
+        description: if a default subnet is going to be deleted, it's the uri of the subnet to set as default for the vpc
+          to replace the deleting one
+        schema:
+          type: string
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Server Error
+      APIDOC: true
+    get:
+      servers:
+        - url: {{ include "subnet.webServiceUrl" . }}
+          description: Url used for a pod exposed with 8080 port exposed via clusterIP service
+      summary: Get a Subnet from Aruba Cloud
+      description: Get a Subnet from Aruba Cloud using the provided project, vpc, and subnet details.
+      operationId: get-subnet
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Subnet ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: ignoreDeletedStatus
+          in: query
+          description: if the resource exists in status 'Deleted', returns NotFound according to the value of this flag
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Subnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "500":
+          description: Internal Server Error
+          content: {}
+    put:
+      servers:
+        - url: {{ include "subnet.webServiceUrl" . }}
+          description: Url used for a pod exposed with 8080 port exposed via clusterIP service
+      summary: Update a Subnet on Aruba Cloud
+      description: Update a Subnet on Aruba Cloud using the provided project, vpc, and subnet details.
+      operationId: put-subnet
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Subnet ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Subnet update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedUpdateSubnetRequestDto'
+        required: true
+      responses:
+        "200":
+          description: Subnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+      x-codegen-request-body-name: subnetUpdate
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}
+    cmd_subnet-plugin_handlers.CategoryResponseDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name is the name of the category.
+        provider:
+          type: string
+          description: Provider is the provider of the category.
+        typology:
+          type: object
+          description: Typology is the typology of the category.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.TypologyResponseDto'
+    cmd_subnet-plugin_handlers.DhcpDto:
+      type: object
+      properties:
+        dns:
+          type: array
+          description: Dns is a list of DNS IP addresses.
+          items:
+            type: string
+        enabled:
+          type: boolean
+          description: Enabled indicates if DHCP is enabled.
+        range:
+          type: object
+          description: Range contains the range values for IP addresses.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RangeDto'
+        routes:
+          type: array
+          description: Routes is a list of routes.
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RouteDto'
+    cmd_subnet-plugin_handlers.DhcpResponseDto:
+      type: object
+      properties:
+        dns:
+          type: array
+          description: Dns is a list of DNS IP addresses.
+          items:
+            type: string
+        enabled:
+          type: boolean
+          description: Enabled indicates if DHCP is enabled.
+        range:
+          type: object
+          description: Range contains the range values for IP addresses.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RangeResponseDto'
+        routes:
+          type: array
+          description: Routes is a list of routes.
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RouteResponseDto'
+    cmd_subnet-plugin_handlers.DisableStatusInfoResponseDto:
+      type: object
+      properties:
+        isDisabled:
+          type: boolean
+          description: IsDisabled indicates if the resource is disabled.
+        previousStatus:
+          type: object
+          description: PreviousStatus is the previous status of the resource.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.PreviousStatusResponseDto'
+        reasons:
+          type: array
+          description: Reasons is a list of reasons for the disabled status.
+          items:
+            type: string
+    cmd_subnet-plugin_handlers.FlattenedCreateSubnetRequestDto:
+      type: object
+      properties:
+        location:
+          type: object
+          description: Location is the region where the resource will be located.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LocationDto'
+        name:
+          type: string
+          description: Name of the resource.
+        properties:
+          type: object
+          description: Properties contains the properties for the subnet.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetPropertiesDto'
+        tags:
+          type: array
+          description: Tags is a list of tags for the resource.
+          items:
+            type: string
+    cmd_subnet-plugin_handlers.FlattenedSubnetListResponseDto:
+      type: object
+      properties:
+        first:
+          type: string
+          description: First is the URI of the first page.
+        last:
+          type: string
+          description: Last is the URI of the last page.
+        next:
+          type: string
+          description: Next is the URI of the next page.
+        prev:
+          type: string
+          description: Prev is the URI of the previous page.
+        self:
+          type: string
+          description: Self is the URI of the current page.
+        total:
+          type: integer
+          description: Total is the total number of subnets.
+        values:
+          type: array
+          description: Values is a list of flattened subnets.
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+    cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto:
+      type: object
+      properties:
+        category:
+          type: object
+          description: Category is the category of the resource.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.CategoryResponseDto'
+        createdBy:
+          type: string
+          description: CreatedBy is the user who created the resource.
+        createdUser:
+          type: string
+          description: CreatedUser is the user who created the resource.
+        creationDate:
+          type: string
+          description: CreationDate is the creation date of the resource.
+        id:
+          type: string
+          description: ID is the unique identifier of the resource.
+        location:
+          type: object
+          description: Location is the region where the resource is located.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LocationResponseDto'
+        name:
+          type: string
+          description: Name is the name of the resource.
+        project:
+          type: object
+          description: Project is the project where the resource belongs.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.ProjectResponseDto'
+        properties:
+          type: object
+          description: Properties contains the properties of the subnet.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetPropertiesResponseDto'
+        status:
+          type: object
+          description: Status contains the status of the subnet.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.StatusResponseDto'
+        tags:
+          type: array
+          description: Tags is a list of tags for the resource.
+          items:
+            type: string
+        updateDate:
+          type: string
+          description: UpdateDate is the last update date of the resource.
+        updatedBy:
+          type: string
+          description: UpdatedBy is the user who last updated the resource.
+        updatedUser:
+          type: string
+          description: UpdatedUser is the user who last updated the resource.
+        uri:
+          type: string
+          description: URI is the URI of the resource.
+        version:
+          type: string
+          description: Version is the version of the resource.
+    cmd_subnet-plugin_handlers.FlattenedUpdateSubnetRequestDto:
+      type: object
+      properties:
+        location:
+          type: object
+          description: Location is the region where the resource will be located.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LocationDto'
+        name:
+          type: string
+          description: Name of the resource.
+        properties:
+          type: object
+          description: Properties contains the properties for updating the subnet.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetUpdatePropertiesDto'
+        tags:
+          type: array
+          description: Tags is a list of tags for the resource.
+          items:
+            type: string
+    cmd_subnet-plugin_handlers.GenericResourceResponseDto:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: URI is the URI of the resource.
+    cmd_subnet-plugin_handlers.LinkedResourceResponseDto:
+      type: object
+      properties:
+        strictCorrelation:
+          type: boolean
+          description: StrictCorrelation indicates if the correlation is strict.
+        uri:
+          type: string
+          description: URI is the URI of the linked resource.
+    cmd_subnet-plugin_handlers.LocationDto:
+      type: object
+      properties:
+        value:
+          type: string
+          description: |-
+            Value is the region where the resource will be located.
+            Available regions at present: ITBG-Bergamo.
+    cmd_subnet-plugin_handlers.LocationResponseDto:
+      type: object
+      properties:
+        city:
+          type: string
+          description: City is the city of the region.
+        code:
+          type: string
+          description: Code is the code of the region.
+        country:
+          type: string
+          description: Country is the country of the region.
+        name:
+          type: string
+          description: Name is the name of the region.
+        value:
+          type: string
+          description: Value is the value of the region.
+    cmd_subnet-plugin_handlers.NetworkDto:
+      type: object
+      properties:
+        address:
+          type: string
+          description: |-
+            Address of the network in CIDR Notation.
+            The IP range must be between 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.
+    cmd_subnet-plugin_handlers.NetworkResponseDto:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Address is the address of the network in CIDR Notation.
+        gateway:
+          type: string
+          description: Gateway is the IP address of the gateway.
+    cmd_subnet-plugin_handlers.PreviousStatusResponseDto:
+      type: object
+      properties:
+        creationDate:
+          type: string
+          description: CreationDate is the creation date of the previous status.
+        state:
+          type: string
+          description: State is the previous state of the resource.
+    cmd_subnet-plugin_handlers.ProjectResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID is the unique identifier of the project.
+    cmd_subnet-plugin_handlers.RangeDto:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Count is the number of available IP addresses.
+        start:
+          type: string
+          description: Start is the starting IP address.
+    cmd_subnet-plugin_handlers.RangeResponseDto:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Count is the number of available IP addresses.
+        last:
+          type: string
+          description: Last is the last IP address.
+        start:
+          type: string
+          description: Start is the first IP address.
+    cmd_subnet-plugin_handlers.RouteDto:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Address is the IP address of the route.
+        gateway:
+          type: string
+          description: Gateway is the gateway for the route.
+    cmd_subnet-plugin_handlers.RouteResponseDto:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Address is the IP address of the route.
+        gateway:
+          type: string
+          description: Gateway is the gateway for the route.
+    cmd_subnet-plugin_handlers.StatusResponseDto:
+      type: object
+      properties:
+        creationDate:
+          type: string
+          description: CreationDate is the creation date of the status.
+        disableStatusInfo:
+          type: object
+          description: DisableStatusInfo contains information about the disabled status.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.DisableStatusInfoResponseDto'
+        failureReason:
+          type: string
+          description: FailureReason is the reason for the failure.
+        state:
+          type: string
+          description: State is the state of the resource.
+    cmd_subnet-plugin_handlers.SubnetPropertiesDto:
+      type: object
+      properties:
+        default:
+          type: boolean
+          description: Default indicates if the subnet must be a default subnet.
+        dhcp:
+          type: object
+          description: Dhcp contains the DHCP details.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.DhcpDto'
+        network:
+          type: object
+          description: Network contains the network details.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.NetworkDto'
+        type:
+          #type: object # removed to avoid type conflict "object" vs "string" when merging allOf
+          description: '"Type of the subnet.\r\nAvailable values:\r\n- Basic\r\n- Advanced\r\n\r\nWith Basic type, every configuration settings of the subnet will be automatically handled by the CMP.\r\nWith Advanced type, configuration settings must be evaluated by the user."'
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetType'
+    cmd_subnet-plugin_handlers.SubnetPropertiesResponseDto:
+      type: object
+      properties:
+        default:
+          type: boolean
+          description: Default indicates if the subnet is the default one.
+        dhcp:
+          type: object
+          description: Dhcp contains the DHCP details.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.DhcpResponseDto'
+        linkedResources:
+          type: array
+          description: LinkedResources is a list of linked resources.
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LinkedResourceResponseDto'
+        network:
+          type: object
+          description: Network contains the network details.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.NetworkResponseDto'
+        type:
+          #type: object # removed to avoid type conflict "object" vs "string" when merging allOf
+          description: Type is the type of the subnet.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetType'
+        vpc:
+          type: object
+          description: Vpc is the VPC where the subnet belongs.
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.GenericResourceResponseDto'
+    cmd_subnet-plugin_handlers.SubnetType:
+      type: string
+      enum:
+        - Basic
+        - Advanced
+      x-enum-varnames:
+        - SubnetTypeBasic
+        - SubnetTypeAdvanced
+    cmd_subnet-plugin_handlers.SubnetUpdatePropertiesDto:
+      type: object
+      properties:
+        default:
+          type: boolean
+          description: Default indicates if the subnet must be a default subnet.
+    cmd_subnet-plugin_handlers.TypologyResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID is the unique identifier of the typology.
+        name:
+          type: string
+          description: Name is the name of the typology.
+  securitySchemes:
+    accessToken:
+      type: http
+      scheme: bearer
+security:
+- accessToken: []
