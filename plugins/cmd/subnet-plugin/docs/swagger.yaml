@@ -1,0 +1,515 @@
+basePath: /
+definitions:
+  cmd_subnet-plugin_handlers.CategoryResponseDto:
+    properties:
+      name:
+        type: string
+      provider:
+        type: string
+      typology:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.TypologyResponseDto'
+    type: object
+  cmd_subnet-plugin_handlers.DhcpDto:
+    properties:
+      dns:
+        items:
+          type: string
+        type: array
+      enabled:
+        type: boolean
+      range:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.RangeDto'
+      routes:
+        items:
+          $ref: '#/definitions/cmd_subnet-plugin_handlers.RouteDto'
+        type: array
+    type: object
+  cmd_subnet-plugin_handlers.DhcpResponseDto:
+    properties:
+      dns:
+        items:
+          type: string
+        type: array
+      enabled:
+        type: boolean
+      range:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.RangeResponseDto'
+      routes:
+        items:
+          $ref: '#/definitions/cmd_subnet-plugin_handlers.RouteResponseDto'
+        type: array
+    type: object
+  cmd_subnet-plugin_handlers.DisableStatusInfoResponseDto:
+    properties:
+      isDisabled:
+        type: boolean
+      previousStatus:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.PreviousStatusResponseDto'
+      reasons:
+        items:
+          type: string
+        type: array
+    type: object
+  cmd_subnet-plugin_handlers.FlattenedCreateSubnetRequestDto:
+    properties:
+      location:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.LocationDto'
+      name:
+        type: string
+      properties:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.SubnetPropertiesDto'
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+  cmd_subnet-plugin_handlers.FlattenedSubnetListResponseDto:
+    properties:
+      first:
+        type: string
+      last:
+        type: string
+      next:
+        type: string
+      prev:
+        type: string
+      self:
+        type: string
+      total:
+        type: integer
+      values:
+        items:
+          $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        type: array
+    type: object
+  cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto:
+    properties:
+      category:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.CategoryResponseDto'
+      createdBy:
+        type: string
+      createdUser:
+        type: string
+      creationDate:
+        type: string
+      id:
+        type: string
+      location:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.LocationResponseDto'
+      name:
+        type: string
+      project:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.ProjectResponseDto'
+      properties:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.SubnetPropertiesResponseDto'
+      status:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.StatusResponseDto'
+      tags:
+        items:
+          type: string
+        type: array
+      updateDate:
+        type: string
+      updatedBy:
+        type: string
+      updatedUser:
+        type: string
+      uri:
+        type: string
+      version:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.FlattenedUpdateSubnetRequestDto:
+    properties:
+      location:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.LocationDto'
+      name:
+        type: string
+      properties:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.SubnetUpdatePropertiesDto'
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+  cmd_subnet-plugin_handlers.GenericResourceResponseDto:
+    properties:
+      uri:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.LinkedResourceResponseDto:
+    properties:
+      strictCorrelation:
+        type: boolean
+      uri:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.LocationDto:
+    properties:
+      value:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.LocationResponseDto:
+    properties:
+      city:
+        type: string
+      code:
+        type: string
+      country:
+        type: string
+      name:
+        type: string
+      value:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.NetworkDto:
+    properties:
+      address:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.NetworkResponseDto:
+    properties:
+      address:
+        type: string
+      gateway:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.PreviousStatusResponseDto:
+    properties:
+      creationDate:
+        type: string
+      state:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.ProjectResponseDto:
+    properties:
+      id:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.RangeDto:
+    properties:
+      count:
+        type: integer
+      start:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.RangeResponseDto:
+    properties:
+      count:
+        type: integer
+      last:
+        type: string
+      start:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.RouteDto:
+    properties:
+      address:
+        type: string
+      gateway:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.RouteResponseDto:
+    properties:
+      address:
+        type: string
+      gateway:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.StatusResponseDto:
+    properties:
+      creationDate:
+        type: string
+      disableStatusInfo:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.DisableStatusInfoResponseDto'
+      failureReason:
+        type: string
+      state:
+        type: string
+    type: object
+  cmd_subnet-plugin_handlers.SubnetPropertiesDto:
+    properties:
+      default:
+        description: '"Indicates if the subnet must be a default subnet.\r\nOnly one
+          default subnet for vpc is admissible."'
+        type: boolean
+      dhcp:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.DhcpDto'
+      network:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.NetworkDto'
+      type:
+        allOf:
+        - $ref: '#/definitions/cmd_subnet-plugin_handlers.SubnetType'
+        description: '"Type of the subnet.\r\nAvailable values:\r\n- Basic\r\n- Advanced\r\n\r\nWith
+          Basic type, every configuration settings of the subnet will be automatically
+          handled by the CMP.\r\nWith Advanced type, configuration settings must be
+          evaluated by the user."'
+    type: object
+  cmd_subnet-plugin_handlers.SubnetPropertiesResponseDto:
+    properties:
+      default:
+        type: boolean
+      dhcp:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.DhcpResponseDto'
+      linkedResources:
+        items:
+          $ref: '#/definitions/cmd_subnet-plugin_handlers.LinkedResourceResponseDto'
+        type: array
+      network:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.NetworkResponseDto'
+      type:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.SubnetType'
+      vpc:
+        $ref: '#/definitions/cmd_subnet-plugin_handlers.GenericResourceResponseDto'
+    type: object
+  cmd_subnet-plugin_handlers.SubnetType:
+    enum:
+    - Basic
+    - Advanced
+    type: string
+    x-enum-varnames:
+    - SubnetTypeBasic
+    - SubnetTypeAdvanced
+  cmd_subnet-plugin_handlers.SubnetUpdatePropertiesDto:
+    properties:
+      default:
+        type: boolean
+    type: object
+  cmd_subnet-plugin_handlers.TypologyResponseDto:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: contact@krateoplatformops.io
+    name: Krateo Support
+    url: https://krateo.io
+  description: Simple wrapper around Aruba Cloud API to provide consistency of API
+    response for Krateo Operator Generator (KOG)
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Aruba Cloud Subnet Plugin API for Krateo Operator Generator (KOG)
+  version: "1.0"
+paths:
+  /projects/{projectId}/providers/Aruba.Network/vpcs/{vpcId}/subnets:
+    get:
+      consumes:
+      - application/json
+      description: List Subnets on Aruba Cloud using the provided project and vpc
+        details.
+      operationId: list-subnets
+      parameters:
+      - description: Project ID
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: VPC ID
+        in: path
+        name: vpcId
+        required: true
+        type: string
+      - description: API version (e.g., 1.0)
+        in: query
+        name: api-version
+        required: true
+        type: string
+      - description: Filter expression
+        in: query
+        name: filter
+        type: string
+      - description: Sort expression
+        in: query
+        name: sort
+        type: string
+      - description: Projection expression
+        in: query
+        name: projection
+        type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      - description: Limit for pagination
+        in: query
+        name: limit
+        type: integer
+      - description: Bearer Token (Bearer <token>)
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: A list of subnets
+          schema:
+            $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedSubnetListResponseDto'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: List Subnets on Aruba Cloud
+    post:
+      consumes:
+      - application/json
+      description: Create a new Subnet on Aruba Cloud using the provided project and
+        vpc details.
+      operationId: post-subnet
+      parameters:
+      - description: Project ID
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: VPC ID
+        in: path
+        name: vpcId
+        required: true
+        type: string
+      - description: API version (e.g., 1.0)
+        in: query
+        name: api-version
+        required: true
+        type: string
+      - description: Bearer Token (Bearer <token>)
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Subnet creation request body
+        in: body
+        name: subnetCreate
+        required: true
+        schema:
+          $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedCreateSubnetRequestDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Subnet details
+          schema:
+            $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: Create a new Subnet on Aruba Cloud
+  /projects/{projectId}/providers/Aruba.Network/vpcs/{vpcId}/subnets/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Subnet from Aruba Cloud using the provided project, vpc,
+        and subnet details.
+      operationId: get-subnet
+      parameters:
+      - description: Project ID
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: VPC ID
+        in: path
+        name: vpcId
+        required: true
+        type: string
+      - description: Subnet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: API version (e.g., 1.0)
+        in: query
+        name: api-version
+        required: true
+        type: string
+      - description: if the resource exists in status 'Deleted', returns NotFound
+          according to the value of this flag
+        in: query
+        name: ignoreDeletedStatus
+        type: boolean
+      - description: Bearer Token (Bearer <token>)
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Subnet details
+          schema:
+            $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Get a Subnet from Aruba Cloud
+    put:
+      consumes:
+      - application/json
+      description: Update a Subnet on Aruba Cloud using the provided project, vpc,
+        and subnet details.
+      operationId: put-subnet
+      parameters:
+      - description: Project ID
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: VPC ID
+        in: path
+        name: vpcId
+        required: true
+        type: string
+      - description: Subnet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: API version (e.g., 1.0)
+        in: query
+        name: api-version
+        required: true
+        type: string
+      - description: Bearer Token (Bearer <token>)
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Subnet update request body
+        in: body
+        name: subnetUpdate
+        required: true
+        schema:
+          $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedUpdateSubnetRequestDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Subnet details
+          schema:
+            $ref: '#/definitions/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+      summary: Update a Subnet on Aruba Cloud
+schemes:
+- http
+swagger: "2.0"

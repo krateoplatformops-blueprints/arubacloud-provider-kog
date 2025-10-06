@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "arubacloud-provider-kog-subnet-blueprint": {
+      "additionalProperties": false,
+      "description": "Configuration for the Subnet Blueprint dependency.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable the Subnet Blueprint dependency.",
+          "title": "enabled",
+          "type": "boolean"
+        }
+      },
+      "title": "arubacloud-provider-kog-subnet-blueprint",
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

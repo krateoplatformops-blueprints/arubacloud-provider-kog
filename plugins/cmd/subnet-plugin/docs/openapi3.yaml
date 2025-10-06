@@ -1,0 +1,538 @@
+openapi: 3.0.1
+info:
+  title: Aruba Cloud Subnet Plugin API for Krateo Operator Generator (KOG)
+  description: Simple wrapper around Aruba Cloud API to provide consistency of API response for Krateo Operator Generator (KOG)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Krateo Support
+    url: https://krateo.io
+    email: contact@krateoplatformops.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+  - url: http://localhost:8080/
+paths:
+  /projects/{projectId}/providers/Aruba.Network/vpcs/{vpcId}/subnets:
+    get:
+      summary: List Subnets on Aruba Cloud
+      description: List Subnets on Aruba Cloud using the provided project and vpc details.
+      operationId: list-subnets
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: Filter expression
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Sort expression
+          schema:
+            type: string
+        - name: projection
+          in: query
+          description: Projection expression
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Limit for pagination
+          schema:
+            type: integer
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of subnets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetListResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "500":
+          description: Internal Server Error
+          content: {}
+    post:
+      summary: Create a new Subnet on Aruba Cloud
+      description: Create a new Subnet on Aruba Cloud using the provided project and vpc details.
+      operationId: post-subnet
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Subnet creation request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedCreateSubnetRequestDto'
+        required: true
+      responses:
+        "201":
+          description: Subnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "500":
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: subnetCreate
+  /projects/{projectId}/providers/Aruba.Network/vpcs/{vpcId}/subnets/{id}:
+    get:
+      summary: Get a Subnet from Aruba Cloud
+      description: Get a Subnet from Aruba Cloud using the provided project, vpc, and subnet details.
+      operationId: get-subnet
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Subnet ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: ignoreDeletedStatus
+          in: query
+          description: if the resource exists in status 'Deleted', returns NotFound according to the value of this flag
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Subnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "500":
+          description: Internal Server Error
+          content: {}
+    put:
+      summary: Update a Subnet on Aruba Cloud
+      description: Update a Subnet on Aruba Cloud using the provided project, vpc, and subnet details.
+      operationId: put-subnet
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+        - name: vpcId
+          in: path
+          description: VPC ID
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Subnet ID
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: API version (e.g., 1.0)
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer Token (Bearer <token>)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Subnet update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedUpdateSubnetRequestDto'
+        required: true
+      responses:
+        "200":
+          description: Subnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+        "400":
+          description: Bad Request
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+      x-codegen-request-body-name: subnetUpdate
+components:
+  schemas:
+    cmd_subnet-plugin_handlers.CategoryResponseDto:
+      type: object
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        typology:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.TypologyResponseDto'
+    cmd_subnet-plugin_handlers.DhcpDto:
+      type: object
+      properties:
+        dns:
+          type: array
+          items:
+            type: string
+        enabled:
+          type: boolean
+        range:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RangeDto'
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RouteDto'
+    cmd_subnet-plugin_handlers.DhcpResponseDto:
+      type: object
+      properties:
+        dns:
+          type: array
+          items:
+            type: string
+        enabled:
+          type: boolean
+        range:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RangeResponseDto'
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.RouteResponseDto'
+    cmd_subnet-plugin_handlers.DisableStatusInfoResponseDto:
+      type: object
+      properties:
+        isDisabled:
+          type: boolean
+        previousStatus:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.PreviousStatusResponseDto'
+        reasons:
+          type: array
+          items:
+            type: string
+    cmd_subnet-plugin_handlers.FlattenedCreateSubnetRequestDto:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LocationDto'
+        name:
+          type: string
+        properties:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetPropertiesDto'
+        tags:
+          type: array
+          items:
+            type: string
+    cmd_subnet-plugin_handlers.FlattenedSubnetListResponseDto:
+      type: object
+      properties:
+        first:
+          type: string
+        last:
+          type: string
+        next:
+          type: string
+        prev:
+          type: string
+        self:
+          type: string
+        total:
+          type: integer
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto'
+    cmd_subnet-plugin_handlers.FlattenedSubnetResponseDto:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.CategoryResponseDto'
+        createdBy:
+          type: string
+        createdUser:
+          type: string
+        creationDate:
+          type: string
+        id:
+          type: string
+        location:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LocationResponseDto'
+        name:
+          type: string
+        project:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.ProjectResponseDto'
+        properties:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetPropertiesResponseDto'
+        status:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.StatusResponseDto'
+        tags:
+          type: array
+          items:
+            type: string
+        updateDate:
+          type: string
+        updatedBy:
+          type: string
+        updatedUser:
+          type: string
+        uri:
+          type: string
+        version:
+          type: string
+    cmd_subnet-plugin_handlers.FlattenedUpdateSubnetRequestDto:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LocationDto'
+        name:
+          type: string
+        properties:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetUpdatePropertiesDto'
+        tags:
+          type: array
+          items:
+            type: string
+    cmd_subnet-plugin_handlers.GenericResourceResponseDto:
+      type: object
+      properties:
+        uri:
+          type: string
+    cmd_subnet-plugin_handlers.LinkedResourceResponseDto:
+      type: object
+      properties:
+        strictCorrelation:
+          type: boolean
+        uri:
+          type: string
+    cmd_subnet-plugin_handlers.LocationDto:
+      type: object
+      properties:
+        value:
+          type: string
+    cmd_subnet-plugin_handlers.LocationResponseDto:
+      type: object
+      properties:
+        city:
+          type: string
+        code:
+          type: string
+        country:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+    cmd_subnet-plugin_handlers.NetworkDto:
+      type: object
+      properties:
+        address:
+          type: string
+    cmd_subnet-plugin_handlers.NetworkResponseDto:
+      type: object
+      properties:
+        address:
+          type: string
+        gateway:
+          type: string
+    cmd_subnet-plugin_handlers.PreviousStatusResponseDto:
+      type: object
+      properties:
+        creationDate:
+          type: string
+        state:
+          type: string
+    cmd_subnet-plugin_handlers.ProjectResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+    cmd_subnet-plugin_handlers.RangeDto:
+      type: object
+      properties:
+        count:
+          type: integer
+        start:
+          type: string
+    cmd_subnet-plugin_handlers.RangeResponseDto:
+      type: object
+      properties:
+        count:
+          type: integer
+        last:
+          type: string
+        start:
+          type: string
+    cmd_subnet-plugin_handlers.RouteDto:
+      type: object
+      properties:
+        address:
+          type: string
+        gateway:
+          type: string
+    cmd_subnet-plugin_handlers.RouteResponseDto:
+      type: object
+      properties:
+        address:
+          type: string
+        gateway:
+          type: string
+    cmd_subnet-plugin_handlers.StatusResponseDto:
+      type: object
+      properties:
+        creationDate:
+          type: string
+        disableStatusInfo:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.DisableStatusInfoResponseDto'
+        failureReason:
+          type: string
+        state:
+          type: string
+    cmd_subnet-plugin_handlers.SubnetPropertiesDto:
+      type: object
+      properties:
+        default:
+          type: boolean
+          description: '"Indicates if the subnet must be a default subnet.\r\nOnly one default subnet for vpc is admissible."'
+        dhcp:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.DhcpDto'
+        network:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.NetworkDto'
+        type:
+          type: object
+          description: '"Type of the subnet.\r\nAvailable values:\r\n- Basic\r\n- Advanced\r\n\r\nWith Basic type, every configuration settings of the subnet will be automatically handled by the CMP.\r\nWith Advanced type, configuration settings must be evaluated by the user."'
+          allOf:
+            - $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetType'
+    cmd_subnet-plugin_handlers.SubnetPropertiesResponseDto:
+      type: object
+      properties:
+        default:
+          type: boolean
+        dhcp:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.DhcpResponseDto'
+        linkedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/cmd_subnet-plugin_handlers.LinkedResourceResponseDto'
+        network:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.NetworkResponseDto'
+        type:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.SubnetType'
+        vpc:
+          $ref: '#/components/schemas/cmd_subnet-plugin_handlers.GenericResourceResponseDto'
+    cmd_subnet-plugin_handlers.SubnetType:
+      type: string
+      enum:
+        - Basic
+        - Advanced
+      x-enum-varnames:
+        - SubnetTypeBasic
+        - SubnetTypeAdvanced
+    cmd_subnet-plugin_handlers.SubnetUpdatePropertiesDto:
+      type: object
+      properties:
+        default:
+          type: boolean
+    cmd_subnet-plugin_handlers.TypologyResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+x-original-swagger-version: "2.0"

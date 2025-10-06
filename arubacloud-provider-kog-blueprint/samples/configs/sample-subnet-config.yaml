@@ -1,0 +1,30 @@
+apiVersion: arubacloud.ogen.krateo.io/v1alpha1
+kind: SubnetConfiguration
+metadata:
+  name: my-subnet-config
+  namespace: default
+spec:
+  authentication:
+    bearer:
+      tokenRef:
+        name: arubacloud-token
+        namespace: krateo-system
+        key: token
+  configuration:
+    query:
+      create:
+        api-version: "1.0"
+      delete:
+        api-version: "1.0"
+      get:
+        api-version: "1.0"
+        ignoreDeletedStatus: false
+      update:
+        api-version: "1.0"
+      findby:
+        api-version: "1.0"
+        #filter: "projectId=project-001"
+        #limit: 10
+        #offset: 0
+        #projection: "id,name"
+        #sort: "name"
