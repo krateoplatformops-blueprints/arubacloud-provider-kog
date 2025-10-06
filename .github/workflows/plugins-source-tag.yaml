@@ -4,8 +4,7 @@ on:
   push:
     tags:
       # This workflow triggers on tags prefixed with a plugin name, e.g.,
-      # collaborator-plugin/1.0.3
-      # teamrepo-plugin/2.8.1
+      # subnet-plugin/1.0.3
       - '*-plugin/[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
@@ -27,7 +26,7 @@ jobs:
           cache-dependency-path: "plugins/go.work.sum"
       
       - name: Run Go Tests
-        run: go test -v ./pkg/... ./cmd/collaborator-plugin/... ./cmd/teamrepo-plugin/...
+        run: go test -v ./pkg/... ./cmd/subnet-plugin/...
 
   parse-tag:
     name: Parse Git Tag
