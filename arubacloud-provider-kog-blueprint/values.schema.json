@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "properties": {
     "arubacloud-provider-kog-subnet-blueprint": {
       "additionalProperties": false,
