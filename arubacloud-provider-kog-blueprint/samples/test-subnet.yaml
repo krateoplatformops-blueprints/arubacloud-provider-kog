@@ -9,8 +9,8 @@ spec:
   configurationRef:
     name: my-subnet-config
     namespace: default 
-  projectId: ABCDEFGHIJKLMNOP
-  vpcId: ABCDEFG
+  projectId: <PROJECT_ID>
+  vpcId: <VPC_ID>
   name: test-subnet-kog-123
   tags:
     - tag1
