@@ -2,7 +2,7 @@
 
 ***KOG***: (*Krateo Operator Generator*)
 
-This is a Krateo Blueprint that deploys the Aruba Cloud Provider KOG leveraging the [OASGen Provider](https://github.com/krateoplatformops/oasgen-provider).
+This is a Krateo Blueprint that deploys the Aruba Cloud Provider KOG leveraging the [OASGen Provider](https://github.com/krateoplatformops/oasgen-provider) and the [Aruba Cloud API](https://api.arubacloud.com/docs/intro).
 This provider allows you to manage Aruba Cloud resources such as subnets in a cloud-native way using the Krateo platform.
 
 ## Summary
@@ -12,6 +12,7 @@ This provider allows you to manage Aruba Cloud resources such as subnets in a cl
 - [How to install](#how-to-install)
   - [Full provider installation](#full-provider-installation)
   - [Single resource installation](#single-resource-installation)
+- [OpenAPI Specification](#openapi-specification)
 - [Supported resources](#supported-resources)
   - [Resource details](#resource-details)
     - [Subnet](#subnet)
@@ -86,6 +87,10 @@ helm install arubacloud-provider-kog-subnet arubacloud-provider-kog-subnet \
   --version 1.0.0 \
   --wait
 ```
+
+## OpenAPI Specification
+
+The OpenAPI Specification used for this provider is derived from the one provided by Aruba Cloud which can be found at the following URL: https://api.arubacloud.com/openapi/network-provider.json.
 
 ## Supported resources
 
