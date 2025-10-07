@@ -2,8 +2,7 @@
 
 This repository contains the source code of a set of plugins for the Aruba Cloud Provider KOG.
 
-> ![NOTE]
-Currently only one plugin is implemented: the `subnet-plugin` even if the structure allows to easily add more plugins in the future if needed.
+Note: currently only one plugin is implemented: the `subnet-plugin` even if the structure allows to easily add more plugins in the future if needed.
 
 Specialized web services that address some integration issues.
 They are designed to work with the [`rest-dynamic-controller`](https://github.com/krateoplatformops/rest-dynamic-controller/).
