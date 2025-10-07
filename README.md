@@ -22,8 +22,9 @@ This provider allows you to manage Aruba Cloud resources such as subnets in a cl
   - [Configuration resources](#configuration-resources)
   - [values.yaml](#valuesyaml)
   - [Verbose logging](#verbose-logging)
-- [Chart structure](#chart-structure)
+- [Charts structure](#charts-structure)
 - [Troubleshooting](#troubleshooting)
+- [Release process](#release-process)
 
 ## Requirements
 
