@@ -110,7 +110,7 @@ An example of a Subnet resource is:
 apiVersion: arubacloud.ogen.krateo.io/v1alpha1
 kind: Subnet
 metadata:
-  name: test-subnet-kog-123
+  name: test-subnet-kog-123-complete
   namespace: default
   annotations:
     krateo.io/connector-verbose: "true"
@@ -120,10 +120,10 @@ spec:
     namespace: config-namespace
   projectId: "proj-12345"
   vpcId: "vpc-67890"
-  name: "example-subnet-name"
+  name: "test-subnet-kog-123-complete"
   location:
     value: "ITBG-Bergamo"
-  newDefaultSubnet: "" # URI for existing subnet to set as default, if needed during deletion of this subnet
+  #newDefaultSubnet: "" # URI for existing subnet to set as default, if needed during deletion of this subnet
   tags:
   - "tag1"
   - "tag2"
@@ -131,20 +131,20 @@ spec:
     default: false
     type: "Advanced" # allowed values: {Basic, Advanced}
     network:
-      address: "10.0.0.0/8" # Address of the network in CIDR Notation. The IP range must be between 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16
+      address: "10.1.0.0/24"
     dhcp:
       enabled: true
       dns:
-      - "8.8.8.8"
-      - "8.8.4.4"
+        - "8.8.8.8"
+        - "8.8.4.4"
       range:
         start: "10.1.0.10"
         count: 200
-      routes:
-      - address: "192.168.0.0/16"
-        gateway: "10.1.0.11"
-      - address: "172.16.0.0/12"
-        gateway: "10.1.0.12"
+      #routes:
+      #  - address: "192.168.0.0/16"
+      #    gateway: "10.1.0.11"
+      #  - address: "172.16.0.0/12"
+      #    gateway: "10.1.0.12"
 ```
 
 ### Resource examples
@@ -158,6 +158,9 @@ The authentication to the Aruba Cloud API is managed using 2 kinds of resources 
 - **Kubernetes Secret**: This resource is used to store the Aruba Cloud Token that is used to authenticate with the Aruba Cloud API. 
 
 In order to generate a Aruba Cloud token, follow these instructions: https://api.arubacloud.com/docs/authentication/.
+
+Note that the token has a limited validity (default 1 hour) and needs to be regenerated periodically.
+Specific solution for token rotation are not covered in this chart and should be implemented by the user if needed.
 
 Example of a Kubernetes Secret that you can apply to your cluster:
 ```sh
