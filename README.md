@@ -26,7 +26,9 @@ This provider allows you to manage Aruba Cloud resources such as subnets in a cl
 
 ## Requirements
 
-[OASGen Provider](https://github.com/krateoplatformops/oasgen-provider) should be installed in your cluster. Follow the related Helm Chart [README](https://github.com/krateoplatformops/oasgen-provider-chart) for installation instructions.
+[OASGen Provider](https://github.com/krateoplatformops/oasgen-provider) should be installed in your cluster with version >= 0.7.1.
+
+Follow the related Helm Chart [README](https://github.com/krateoplatformops/oasgen-provider-chart) for installation instructions.
 Note that a standard installation of Krateo contains the OASGen Provider.
 
 ## Project structure
